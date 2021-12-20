@@ -1,6 +1,6 @@
 import {ZebraState} from '@/store/zebra/index';
 import {ActionTree} from 'vuex';
-import {createApiClient} from '@/helpers/api-client';
+import {createApiClient} from '@/helpers/zebra-client';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const actions: ActionTree<ZebraState, any> = {
