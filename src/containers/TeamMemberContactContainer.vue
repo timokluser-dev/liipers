@@ -1,17 +1,21 @@
 <template>
-  <TeamMemberContactComponent v-if="(!loading && liiper) && !isDismissed" :team-member="liiper"
-                              :dismissible="dismissible" @close="onClose"></TeamMemberContactComponent>
+  <TeamMemberContactComponent
+    v-if="!loading && liiper && !isDismissed"
+    :team-member="liiper"
+    :dismissible="dismissible"
+    @close="onClose"
+  ></TeamMemberContactComponent>
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-import TeamMemberContactComponent from "@/components/TeamMemberContactComponent.vue";
-import {Liiper} from "@/store/zebra/models";
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import TeamMemberContactComponent from '@/components/TeamMemberContactComponent.vue';
+import {Liiper} from '@/store/zebra/models';
 
 @Component({
   components: {
-    TeamMemberContactComponent
-  }
+    TeamMemberContactComponent,
+  },
 })
 export default class TeamMemberContactContainer extends Vue {
   @Prop() liiperId!: number;
@@ -41,5 +45,4 @@ export default class TeamMemberContactContainer extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

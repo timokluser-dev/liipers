@@ -1,16 +1,20 @@
 <template>
-  <TeamMemberComponent v-if="!loading && liiper" :team-member="liiper" :is-selectable="false"></TeamMemberComponent>
+  <TeamMemberComponent
+    v-if="!loading && liiper"
+    :team-member="liiper"
+    :is-selectable="false"
+  ></TeamMemberComponent>
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-import TeamMemberComponent from "@/components/TeamMemberComponent.vue";
-import {Liiper} from "@/store/zebra/models";
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import TeamMemberComponent from '@/components/TeamMemberComponent.vue';
+import {Liiper} from '@/store/zebra/models';
 
 @Component({
   components: {
-    TeamMemberComponent
-  }
+    TeamMemberComponent,
+  },
 })
 export default class TeamMemberContainer extends Vue {
   @Prop() liiperId!: number;
@@ -35,5 +39,4 @@ export default class TeamMemberContainer extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>
