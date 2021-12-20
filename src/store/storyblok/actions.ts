@@ -7,11 +7,15 @@ export const actions: ActionTree<StoryblokState, any> = {
   async fetchStory({commit}, slug: string) {
     commit('setStoryLoading');
 
-    const response = await createStoryblokClient().getStory(slug, {
-      version: process.env.VUE_APP_STORYBLOK_VERSION,
-    });
-    if (response.data) {
-      commit('updateStory', response.data.story);
+    try {
+      const response = await createStoryblokClient().getStory(slug, {
+        version: process.env.VUE_APP_STORYBLOK_VERSION ?? 'published',
+      });
+      if (response.data) {
+        commit('updateStory', response.data.story);
+      }
+    } catch (e) {
+      commit('updateStory', null);
     }
   },
 };

@@ -17,20 +17,21 @@ import {Component, Vue} from 'vue-property-decorator';
 import AppHeaderComponent from "@/components/AppHeaderComponent.vue";
 import {StoryData} from 'storyblok-js-client'
 import {storyblokConfig} from "@/helpers/storyblok-client";
+import TeamMemberContainer from "@/containers/TeamMemberContainer.vue";
+import TeamMemberContactContainer from "@/containers/TeamMemberContactContainer.vue";
 import NotFoundContainer from "@/containers/NotFoundContainer.vue";
 
 @Component({
   components: {
     // all storyblok components:
     AppHeaderComponent,
+    TeamMemberContainer,
+    TeamMemberContactContainer,
     NotFoundContainer
   }
 })
 export default class StoryblokPage extends Vue {
   pageRoute: string | null = null;
-
-  // created(): void {
-  // }
 
   mounted(): void {
     this.pageRoute = this.$route.path;
@@ -39,16 +40,20 @@ export default class StoryblokPage extends Vue {
   }
 
   initLiveEdit(): void {
+    // storyblok bridge init
     window.storyblok.init(storyblokConfig);
 
     window.storyblok.pingEditor(() => {
-      if (window.storyblok.isInEditor()) {
-        console.debug('live editor active');
-        window.storyblok.on("input", (payload) => {
-          const story: StoryData = payload?.story;
-          this.$store.commit('storyblok/updateStory', story);
-        })
-      }
+      if (window.storyblok.isInEditor())
+        this.registerLiveEditStoryUpdate();
+    })
+  }
+
+  registerLiveEditStoryUpdate(): void {
+    // see: https://www.storyblok.com/docs/Guides/storyblok-latest-js#:~:text=%7D-,Input%20event,-The
+    window.storyblok.on("input", (payload) => {
+      const story: StoryData = payload?.story;
+      this.$store.commit('storyblok/updateStory', story);
     })
   }
 
@@ -63,5 +68,4 @@ export default class StoryblokPage extends Vue {
 </script>
 
 <style scoped lang="scss">
-
 </style>
