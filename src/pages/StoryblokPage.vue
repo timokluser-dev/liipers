@@ -1,10 +1,14 @@
 <template>
-  <div v-if="!loading && story">
-    <AppHeaderComponent :title="story.content.title"></AppHeaderComponent>
+  <div>
+    <div v-if="!loading && story">
+      <AppHeaderComponent :title="story.content.title"></AppHeaderComponent>
 
-    <template v-for="blok in story.content.body">
-      <component :is="blok.component" :key="blok._uid" v-bind="blok" v-editable="blok"></component>
-    </template>
+      <template v-for="blok in story.content.body">
+        <component :is="blok.component" :key="blok._uid" v-bind="blok" v-editable="blok"></component>
+      </template>
+    </div>
+
+    <NotFoundContainer v-else-if="!loading && !story"></NotFoundContainer>
   </div>
 </template>
 
@@ -13,10 +17,13 @@ import {Component, Vue} from 'vue-property-decorator';
 import AppHeaderComponent from "@/components/AppHeaderComponent.vue";
 import {StoryData} from 'storyblok-js-client'
 import {storyblokConfig} from "@/helpers/storyblok-client";
+import NotFoundContainer from "@/containers/NotFoundContainer.vue";
 
 @Component({
   components: {
-    AppHeaderComponent
+    // all storyblok components:
+    AppHeaderComponent,
+    NotFoundContainer
   }
 })
 export default class StoryblokPage extends Vue {
